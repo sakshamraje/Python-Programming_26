@@ -111,40 +111,34 @@ else:
 # Assignment A6
 
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 
-df = pd.read_csv("data.csv")
-print(df)
+df = pd.read_csv("students.csv")
 
-#LINE PLOT
-plt.plot(df["Name"], df["Marks"])
-plt.xlabel("Name")
-plt.ylabel("Marks")
-plt.title("Line Plot")
-plt.show()
+print("First five records")
+print(df.head())
 
-#BAR PLOT
-plt.bar(df["Name"], df["Marks"])
-plt.xlabel("Name")
-plt.ylabel("Marks")
-plt.title("Bar Plot")
-plt.show()
+print("\n Dataset information:")
+df.info()
 
-#SCATTER PLOT
-plt.scatter(df["Age"], df["Marks"])
-plt.xlabel("Age")
-plt.ylabel("Marks")
-plt.title("Scatter Plot")
-plt.show()
+print("\n Statistical Summary")
+print(df.describe())
 
-#HEATMAP
-plt.figure(figsize=(6, 4))
-sns.heatmap(df.select_dtypes("number").corr(),
-            annot=True, cmap="coolwarm")
-plt.title("Correlation Heatmap")
-plt.show()
+print("\n Missing values:")
+print(df.isnull().sum())
 
+df['Marks'] = df['Marks'].fillna(df['Marks'].mean())
+
+df['City'] = df['City'].fillna(df['City'].mode()[0])
+
+print("\n Duplicate Records:")
+print(df.duplicated())
+
+df = df.drop_duplicated()
+
+filtered_data = df.loc[df['Marks'] > 75]
+
+print("\n Filtered Data:")
+print(filtered_data)
 
 # Assignment A7
 
